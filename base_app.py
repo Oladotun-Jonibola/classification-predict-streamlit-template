@@ -22,6 +22,7 @@
 
 """
 # Streamlit dependencies
+from unittest import result
 import streamlit as st
 import joblib,os
 
@@ -29,7 +30,7 @@ import joblib,os
 import pandas as pd
 
 # Vectorizer
-news_vectorizer = open("resources/tfidfvect.pkl","rb")
+news_vectorizer = open("vec.pkl","rb")
 tweet_cv = joblib.load(news_vectorizer) # loading your vectorizer from the pkl file
 
 # Load your raw data
@@ -41,7 +42,7 @@ def main():
 
 	# Creates a main title and subheader on your page -
 	# these are static across all pages
-	st.title("Tweet Classifer")
+	st.title("Team 9 Tweet Classifer")
 	st.subheader("Climate change tweet classification")
 
 	# Creating sidebar with selection box -
@@ -72,6 +73,15 @@ def main():
 			# Try loading in multiple models to give the user a choice
 			predictor = joblib.load(open(os.path.join("resources/Logistic_regression.pkl"),"rb"))
 			prediction = predictor.predict(vect_text)
+			if prediction==2:
+				result='Greatly Support Effect of Climate Change'
+			elif prediction==1:
+				result=	'Support Effect of Climate Change'
+			elif prediction==0:
+				result= 'No Decision on Climate Change'
+			else:
+				result= 'Against Climate Change'
+				
 
 			# When model has successfully run, will print prediction
 			# You can use a dictionary or similar structure to make this output
